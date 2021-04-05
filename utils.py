@@ -10,19 +10,19 @@ def parse_troels():
         quotes = f.read().split('\n\n\n')
     return [quote.split('\n\n') for quote in quotes]
 
-async def join(ctx, channel):
-    if ctx.voice_client is not None:
-        return await ctx.voice_client.move_to(channel)
-    
-    await channel.connect()
-
 async def play_mp3(ctx, filename):
-    voice_channel = ctx.author.voice.channel
-    await join(ctx, voice_channel)
-    ctx.voice_client.play(discord.FFmpegPCMAudio(source=f'resources/{filename}.mp3', **FFMPEG_OPTIONS))
-    while ctx.voice_client.is_playing():
-        time.sleep(0.1)
-    await ctx.voice_client.disconnect()
+    voice = ctx.author.voice
+    if voice is not None:
+        vc = await voice.channel.connect()
+        vc.play(discord.FFmpegPCMAudio(source=f'resources/{filename}.mp3'))
+        while vc.is_playing():
+            time.sleep(.1)
+        await vc.disconnect()
+    else:
+        await ctx.reply(
+            f"Hey {ctx.author.name}!\nGå lige ind i en voice channel inden du be'r mig spille **{filename}** :wink:.",
+            mention_author=False
+        )
 
 if __name__ == '__main__':
     quotes = parse_troels()
