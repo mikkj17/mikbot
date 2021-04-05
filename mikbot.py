@@ -34,7 +34,7 @@ async def troels(ctx):
 @bot.command()
 async def silke(ctx, name: str = None):
     if name is not None:
-        await ctx.send(f'This one is for you, {name.title()}', tts=True)
+        await ctx.send(f'Den her er til dig, {name.title()}', tts=True)
         time.sleep(3)
     await utils.play_mp3(ctx, 'silke')
 
