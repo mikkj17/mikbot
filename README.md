@@ -1,4 +1,4 @@
-# whatwhatinthebutt
+# whatwhatinthebot
 
 ## Features of **mikbot**
 
