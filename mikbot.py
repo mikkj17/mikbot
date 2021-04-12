@@ -16,6 +16,7 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='.', intents=intents)
 
+quotes = utils.load_troels()
 
 @bot.event
 async def on_ready():
@@ -27,8 +28,8 @@ async def on_ready():
 
 @bot.command()
 async def troels(ctx):
-    quote, context = random.choice(utils.parse_troels())
-    await ctx.send(f'{quote}\n*{context}*')
+    chosen = random.choice(quotes)
+    await ctx.send(f'{chosen["quote"]}\n*{chosen["context"]}*')
 
 
 @bot.command()
@@ -53,5 +54,5 @@ async def ja(ctx):
 async def motivation(ctx):
     await utils.play_mp3(ctx, 'motivation')
 
-
 bot.run(TOKEN)
+

@@ -1,14 +1,17 @@
 import discord
+import json
 import time
+
+from typing import Dict
+from typing import List
 
 FFMPEG_OPTIONS = {
     'options': '-vn'
 }
 
-def parse_troels():
-    with open('resources/citater.txt', encoding='utf-8') as f:
-        quotes = f.read().split('\n\n\n')
-    return [quote.split('\n\n') for quote in quotes]
+def load_troels() -> List[Dict[str, str]]:
+    with open('resources/citater.json', encoding='utf-8') as f:
+        return json.load(f)
 
 async def play_mp3(ctx, filename):
     voice = ctx.author.voice
@@ -25,5 +28,6 @@ async def play_mp3(ctx, filename):
         )
 
 if __name__ == '__main__':
-    quotes = parse_troels()
-    print(quotes[-2])
+    quotes = load_troels()
+    quote = quotes[-2]
+    print(quote['quote'])
