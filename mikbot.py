@@ -1,12 +1,13 @@
-import os
 import discord
+import os
 import random
-import utils
 import time
+import utils
 
-from dotenv import load_dotenv
-from discord import Intents
 from discord.ext import commands
+from discord import Intents
+from dotenv import load_dotenv
+from typing import Optional
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -33,9 +34,9 @@ async def troels(ctx):
 
 
 @bot.command()
-async def silke(ctx, name: str = None):
-    if name is not None:
-        await ctx.send(f'Den her er til dig, {name.title()}', tts=True)
+async def silke(ctx, member: str = None):
+    if member:
+        await ctx.send(f'Den her går ud til dig, {member.title()}', tts=True)
         time.sleep(3)
     await utils.play_mp3(ctx, 'silke')
 
