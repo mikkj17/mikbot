@@ -34,26 +34,26 @@ async def troels(ctx):
 
 
 @bot.command()
-async def silke(ctx, member: str = None):
+async def silke(ctx, channel: Optional[discord.VoiceChannel], member: str = None):
     if member:
         await ctx.send(f'Den her går ud til dig, {member.title()}', tts=True)
         time.sleep(3)
-    await utils.play_mp3(ctx, 'silke')
+    await utils.play_mp3(ctx, 'silke', channel)
 
 
 @bot.command()
-async def hestene(ctx):
-    await utils.play_mp3(ctx, 'hestene')
+async def hestene(ctx, channel: Optional[discord.VoiceChannel]):
+    await utils.play_mp3(ctx, 'hestene', channel)
 
 
 @bot.command()
-async def ja(ctx):
-    await utils.play_mp3(ctx, 'ja')
+async def ja(ctx, channel: Optional[discord.VoiceChannel]):
+    await utils.play_mp3(ctx, 'ja', channel)
 
 
 @bot.command()
-async def motivation(ctx):
-    await utils.play_mp3(ctx, 'motivation')
+async def motivation(ctx, channel: Optional[discord.VoiceChannel]):
+    await utils.play_mp3(ctx, 'motivation', channel)
 
 bot.run(TOKEN)
 

@@ -1,17 +1,18 @@
 import discord
-import functools
 import json
 import time
 
+from string import Template
 from typing import Dict
 from typing import List
 
-FFMPEG_OPTIONS = {
-    'options': '-vn'
-}
+MP3_ERROR_MSG = Template(
+"""Hey $name. Du er noob!
+Gå ind i en voice channel eller skriv \
+navnet på den kanal hvor jeg skal \
+afspille **$filename** :wink:.""")
 
 def log(func):
-    @functools.wraps(func)
     def inner(*args, **kwargs):
         print(f'{func.__name__} command was issued')
         print(f'arguments: {args[1:]}')
@@ -22,18 +23,24 @@ def load_troels() -> List[Dict[str, str]]:
     with open('resources/citater.json', encoding='utf-8') as f:
         return json.load(f)
 
+async def connect_and_play(stream, channel):
+    vc = await channel.connect()
+    vc.play(stream)
+    while vc.is_playing():
+        time.sleep(.1)
+    await vc.disconnect()
+
 @log
-async def play_mp3(ctx, filename):
+async def play_mp3(ctx, filename, channel):
+    stream = discord.FFmpegPCMAudio(source=f'resources/{filename}.mp3')
     voice = ctx.author.voice
-    if voice is not None:
-        vc = await voice.channel.connect()
-        vc.play(discord.FFmpegPCMAudio(source=f'resources/{filename}.mp3'))
-        while vc.is_playing():
-            time.sleep(.1)
-        await vc.disconnect()
+    if channel:
+        await connect_and_play(stream, channel)
+    elif voice:
+        await connect_and_play(stream, voice.channel)
     else:
         await ctx.reply(
-            f"Hey {ctx.author.name}!\nGå lige ind i en voice channel inden du be'r mig spille **{filename}** :wink:.",
+            MP3_ERROR_MSG.substitute(name=ctx.author.name, filename=filename),
             mention_author=False
         )
 
