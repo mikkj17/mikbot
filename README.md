@@ -1,6 +1,6 @@
 # whatwhatinthebot
 
-## Features of **mikbot**
+## Features of mikbot
 
 ### Simple commands
 
@@ -17,11 +17,11 @@
 ### Livescore bot
 
 1. Use some LiveScore API to get scores of football games.
-    * Free API's are very limited in the number of requests you're allowed to send.
-      * Both in the case of requests per day, and request per hour.
+    - Free API's are very limited in the number of requests you're allowed to send.
+      - Both in the case of requests per day, and request per hour.
 
-## Other things to do for **mikbot**
+## Other things to do for mikbot
 
-* Write help strings for each command
-* Maybe make aliases for each command
+- Write help strings for each command
+- Maybe make aliases for each command
 
