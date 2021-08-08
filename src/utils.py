@@ -1,11 +1,11 @@
 import discord
 import json
 import time
+from discord.ext.commands.context import Context
 from string import Template
 from typing import Dict
 from typing import List
-
-from discord.ext.commands.context import Context
+from typing import Union
 
 
 MP3_ERROR_MSG = Template(
@@ -37,7 +37,7 @@ async def connect_and_play(stream: discord.player.FFmpegPCMAudio, channel: disco
 
 
 @log
-async def play_mp3(ctx: Context, filename: str, channel: discord.channel.VoiceChannel) -> None:
+async def play_mp3(ctx: Context, filename: str, channel: Union[discord.channel.VoiceChannel, None]) -> None:
     stream = discord.FFmpegPCMAudio(source=f'resources/{filename}.mp3')
     voice = ctx.author.voice
     if channel:

@@ -1,8 +1,10 @@
+import pymongo
 import requests
 from typing import Dict
 from typing import List
 
-from livescore import API_KEY, API_SECRET, BASE_API_URL, teams
+from . import API_KEY, API_SECRET, BASE_API_URL
+from .mongo import teams
 
 
 def get_teams_of_country(country_id: int) -> List[Dict]:
@@ -38,3 +40,6 @@ def fill_database():
         else:
             print(country)
 
+
+def create_index() -> None:
+    teams.create_index([('name', pymongo.TEXT)])
