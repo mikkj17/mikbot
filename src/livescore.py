@@ -1,9 +1,9 @@
 import requests
 import time
-from typing import Dict
+from typing import Dict, Tuple
 
+import mongo
 from constants import API_KEY, API_SECRET, BASE_API_URL
-from constants import mongo
 
 
 def get_superliga_results() -> Dict:
@@ -14,15 +14,16 @@ def get_events(fixture_id: int) -> Dict:
     return requests.get(f'{BASE_API_URL}/scores/events.json?key={API_KEY}&secret={API_SECRET}&id={fixture_id}').json()
 
 
-def sub_unsub(user_id: int, team_name: str, sub: bool) -> str:
+def sub_unsub(user_id: int, team_parts: Tuple[str], sub: bool) -> str:
+    team_name = ' '.join(team_parts)
     possible_teams = mongo.search_for_team(team_name)
 
     if possible_teams.count() == 0:
-        message = 'Team not found!'
+        message = f'{team_name} not found!'
 
     elif possible_teams.count() > 1:
-        formatted_teams = '\n'.join(f"{team['name']} - {team['_id']}" for team in possible_teams)
-        message = f'Multiple teams found. Please specify one of the following using their ID:\n{formatted_teams}'
+        formatted_teams = '\n'.join(f"{team['name']} - {team['_id']}" for team in possible_teams[:10])
+        message = f'Multiple teams found for {team_name}. Please specify one of the following using their id:\n{formatted_teams}'
 
     else:
         team = possible_teams[0]

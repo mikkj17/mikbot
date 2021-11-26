@@ -54,12 +54,13 @@ async def motivation(ctx: Context, channel: Optional[discord.channel.VoiceChanne
 
 
 @bot.command()
-async def subscribe(ctx: Context, team_name: str) -> None:
+async def subscribe(ctx: Context, *team_name: str) -> None:
     message = livescore.sub_unsub(ctx.author.id, team_name, True)
+    print('message:', message)
     await ctx.send(message)
 
 
 @bot.command()
-async def unsubscribe(ctx: Context, team_name: str) -> None:
+async def unsubscribe(ctx: Context, *team_name: str) -> None:
     message = livescore.sub_unsub(ctx.author.id, team_name, False)
     await ctx.send(message)
