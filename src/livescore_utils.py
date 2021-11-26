@@ -3,8 +3,8 @@ import requests
 from typing import Dict
 from typing import List
 
-from . import API_KEY, API_SECRET, BASE_API_URL
-from .mongo import teams
+from constants import API_KEY, API_SECRET, BASE_API_URL
+from mongo import teams
 
 
 def get_teams_of_country(country_id: int) -> List[Dict]:

@@ -2,8 +2,8 @@ import requests
 import time
 from typing import Dict
 
-from . import API_KEY, API_SECRET, BASE_API_URL
-from . import mongo
+from constants import API_KEY, API_SECRET, BASE_API_URL
+from constants import mongo
 
 
 def get_superliga_results() -> Dict:

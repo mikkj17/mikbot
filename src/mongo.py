@@ -3,7 +3,7 @@ from pymongo.cursor import Cursor
 from pymongo.results import UpdateResult
 from typing import Dict
 
-from . import MONGO_CONNECTION_URL
+from constants import MONGO_CONNECTION_URL
 
 client = pymongo.MongoClient(MONGO_CONNECTION_URL)
 db = client["mikbot"]

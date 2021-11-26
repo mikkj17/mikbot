@@ -6,8 +6,8 @@ from discord.ext import commands
 from discord.ext.commands.context import Context
 from typing import Optional
 
-from . import livescore
-from . import utils
+import livescore
+import utils
 
 intents = Intents.default()
 intents.members = True
